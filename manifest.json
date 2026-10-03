@@ -1,7 +1,7 @@
 {
-  "name": "Riabilitazione Scapola DX",
-  "short_name": "Scapola DX",
-  "start_url": "index.html",
+  "name": "scapola-app",
+  "short_name": "Scapola",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
