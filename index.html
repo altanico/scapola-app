@@ -1,111 +1,274 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Riabilitazione Scapola</title>
+<meta charset="UTF-8">
+<title>Riabilitazione Scapola DX – Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Manifest -->
-  <link rel="manifest" href="manifest.json">
+<!-- Manifest PWA -->
+<link rel="manifest" href="manifest.json">
 
-  <!-- Stili base -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 1rem;
-      background: #f5f5f5;
-    }
+<!-- Service Worker -->
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
 
-    .card {
-      background: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .exercise-title {
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-
-    .exercise-desc {
-      margin-bottom: 1rem;
-      color: #444;
-    }
-  </style>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;margin:0;padding:1.2rem;background:#fafafa;color:#111;}
+h1{font-size:1.6rem;margin-bottom:0.3rem;}
+h2{font-size:1.3rem;margin-top:1.4rem;}
+.card{background:#fff;border-radius:14px;padding:1.2rem;margin-top:1rem;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+.exercise-title{font-weight:600;margin-top:1rem;}
+.exercise-desc{font-size:0.9rem;color:#555;margin:0.3rem 0;}
+.exercise-extra{font-size:0.85rem;color:#777;margin-bottom:0.4rem;}
+.exercise-errors{font-size:0.85rem;color:#a33;margin-bottom:1rem;}
+label{display:flex;gap:0.7rem;align-items:flex-start;margin-bottom:0.8rem;}
+input[type="checkbox"]{margin-top:0.25rem;transform:scale(1.2);}
+.status{font-weight:600;margin-top:0.5rem;}
+.status.done{color:#1a8f3a;}
+.status.notdone{color:#b33a3a;}
+.history-day{display:flex;justify-content:space-between;margin-bottom:0.3rem;}
+.badge{padding:0.2rem 0.5rem;border-radius:999px;font-size:0.8rem;}
+.badge-ok{background:#d9f5df;color:#1a8f3a;}
+.badge-ko{background:#f8d7da;color:#b33a3a;}
+.progress-bar{width:100%;height:12px;background:#e0e0e0;border-radius:999px;overflow:hidden;margin-top:0.4rem;}
+.progress-fill{height:100%;background:#1a8f3a;width:0%;transition:width 0.3s;}
+.emg-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;}
+.emg-box{background:#fff;border-radius:14px;padding:1rem;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+.emg-value{font-size:1.4rem;font-weight:600;}
+.emg-label{font-size:0.85rem;color:#666;}
+</style>
 </head>
 
 <body>
+<h1>Riabilitazione Scapola DX</h1>
+<small>Dashboard personale – offline</small>
 
-  <!-- TEST SETTIMANALE (visibile solo il lunedì) -->
-  <div id="weekly-test" class="card">
-    <h2>Test Settimanale</h2>
-    <p>Effettua il test di valutazione della scapola.</p>
-    <!-- Qui puoi mettere il contenuto del test -->
-  </div>
-
-  <!-- SEZIONE ESERCIZI GIORNALIERI -->
-  <div class="card">
-    <h2>Esercizi del giorno</h2>
-    <p>Completa gli esercizi assegnati per oggi.</p>
-    <!-- Qui rimane la tua logica degli esercizi giornalieri -->
-  </div>
-
-  <!-- LISTA COMPLETA ESERCIZI (compressa, in fondo) -->
-  <div class="card" style="margin-top:2rem;">
-    <div id="exercise-toggle" style="font-weight:600; cursor:pointer;">
-      Lista completa esercizi ▼
+<div class="card">
+  <h2>Dashboard EMG</h2>
+  <p>Confronto reale tra <strong>Giugno 2026</strong> e <strong>Ottobre 2026</strong>.</p>
+  <div class="emg-grid">
+    <div class="emg-box">
+      <div class="emg-label">Ampiezza Trapezio DX</div>
+      <div class="emg-value">1.32 → 2.40 mV</div>
+      <small>Recupero: +82%</small>
     </div>
-
-    <div id="exercise-list" style="display:none; margin-top:1rem;">
-      <!-- 🔽 QUI DENTRO METTI LA TUA LISTA COMPLETA DEGLI ESERCIZI 🔽 -->
-
-      <div class="exercise-title">Esercizio 1 – Nome esercizio</div>
-      <div class="exercise-desc">Descrizione dell’esercizio…</div>
-
-      <div class="exercise-title">Esercizio 2 – Nome esercizio</div>
-      <div class="exercise-desc">Descrizione dell’esercizio…</div>
-
-      <!-- Continua con tutti gli esercizi -->
+    <div class="emg-box">
+      <div class="emg-label">Durata Potenziale</div>
+      <div class="emg-value">18.9 → 21.2 ms</div>
+      <small>Reinnervazione attiva</small>
+    </div>
+    <div class="emg-box">
+      <div class="emg-label">Latenza</div>
+      <div class="emg-value">5.92 → 6.40 ms</div>
+      <small>Normale nella rigenerazione</small>
+    </div>
+    <div class="emg-box">
+      <div class="emg-label">Fascicolazioni</div>
+      <div class="emg-value">3+ → 1+</div>
+      <small>Muscolo più stabile</small>
     </div>
   </div>
+</div>
 
-  <!-- SCRIPT: mostra test solo il lunedì -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const today = new Date().getDay(); // 1 = lunedì
-      const testSection = document.getElementById("weekly-test");
+<div class="card">
+  <h2>Esercizi Mirati per Scapola Instabile</h2>
+  <p>Programma completo con descrizioni dettagliate.</p>
+  <div id="targetExercises"></div>
+</div>
 
-      if (today !== 1) {
-        testSection.style.display = "none";
-      }
-    });
-  </script>
+<div class="card">
+  <h2>Progressione Mensile</h2>
+  <ul>
+    <li><strong>Mese 1:</strong> Stabilità scapolare + isometrie.</li>
+    <li><strong>Mese 2:</strong> Rematore elastico + wall slides.</li>
+    <li><strong>Mese 3:</strong> Abduzione controllata + Y‑raise.</li>
+    <li><strong>Mese 4:</strong> Integrazione scapola‑braccio.</li>
+  </ul>
+</div>
 
-  <!-- SCRIPT: lista esercizi comprimibile -->
-  <script>
-    document.getElementById("exercise-toggle").addEventListener("click", () => {
-      const list = document.getElementById("exercise-list");
-      const toggle = document.getElementById("exercise-toggle");
+<div class="card">
+  <h2>Test di Stabilità Scapolare (Settimanale)</h2>
+  <p>Ogni lunedì esegui i 3 test e registra PASS/FAIL.</p>
+  <div id="weeklyScapulaTest"></div>
+  <h3>Storico Settimanale</h3>
+  <div id="weeklyScapulaHistory"></div>
+</div>
 
-      if (list.style.display === "none") {
-        list.style.display = "block";
-        toggle.innerHTML = "Lista completa esercizi ▲";
-      } else {
-        list.style.display = "none";
-        toggle.innerHTML = "Lista completa esercizi ▼";
-      }
-    });
-  </script>
+<div class="card">
+  <h2>Esercizi di Oggi (Selezione Intelligente)</h2>
+  <p><span id="todayDate"></span></p>
+  <div id="exerciseList"></div>
+  <p id="todayStatus" class="status"></p>
+</div>
 
-  <!-- REGISTRAZIONE SERVICE WORKER -->
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js");
-    }
-  </script>
+<div class="card">
+  <h2>Storico Ultimi 7 Giorni</h2>
+  <div id="historyList"></div>
+  <div class="progress-bar"><div id="weeklyProgress" class="progress-fill"></div></div>
+  <p id="weeklyLabel"></p>
+</div>
 
+<script>
+const targetExercisesData=[
+{id:'set_scapolare',title:'Set Scapolare',desc:'Riporta la scapola in posizione neutra (indietro e in basso) senza attivare troppo il trapezio superiore. Movimento piccolo e controllato.',extra:'10–15 sec × 6',errors:'Sollevare le spalle; stringere troppo le scapole; irrigidire il collo; gonfiare il petto.'},
+{id:'stabilita_muro',title:'Stabilità al Muro',desc:'Appoggia gomiti e avambracci al muro. Mantieni la scapola aderente al torace mentre spingi leggermente nel muro.',extra:'10–15 sec × 6',errors:'Scapola che scivola in avanti; spalle che salgono; schiena che si inarca.'},
+{id:'shrug_isometrico',title:'Shrug Isometrico',desc:'Solleva la spalla contro la mano opposta che oppone resistenza. Attivazione controllata del trapezio superiore.',extra:'5–8 sec × 10',errors:'Inclinare il collo; ruotare il busto; spingere troppo forte.'},
+{id:'rematore_elastico',title:'Rematore con Elastico',desc:'Tira i gomiti indietro mantenendoli vicini al corpo. La scapola si muove indietro e leggermente in basso.',extra:'3×10–12',errors:'Tirare con le braccia; spalle che salgono; schiena che si muove; gomiti troppo larghi.'},
+{id:'elevazione_assistita',title:'Elevazione Assistita',desc:'Solleva il braccio lentamente, fermandoti ogni 20–30° per controllare la scapola. Deve ruotare verso l’alto in modo fluido.',extra:'3×8',errors:'Scapola che si muove indipendentemente; movimento veloce; compensi con il tronco.'},
+{id:'wall_slides',title:'Wall Slides',desc:'Appoggia avambracci e mani al muro e scivola verso l’alto lentamente. Mantieni la scapola aderente al torace.',extra:'3×10',errors:'Scapola che sporge; spalle che salgono; schiena che si inarca.'},
+{id:'abduzione_controllata',title:'Abduzione Controllata',desc:'Solleva il braccio lateralmente molto lentamente. Ogni 20° fermati e controlla la scapola.',extra:'3×8',errors:'Scapola che “cade”; spalle che salgono; movimento troppo veloce.'},
+{id:'y_raise',title:'Y‑Raise',desc:'Solleva le braccia formando una Y, mantenendo la scapola aderente e ruotata verso l’alto.',extra:'3×10',errors:'Spalle che salgono; scapola che scivola; movimento troppo ampio.'}
+];
+
+function renderTargetExercises(){
+ const c=document.getElementById('targetExercises');c.innerHTML='';
+ targetExercisesData.forEach(ex=>{
+  const w=document.createElement('div');
+  w.innerHTML=`<div class="exercise-title">${ex.title}</div>
+  <div class="exercise-desc">${ex.desc}</div>
+  <div class="exercise-extra"><strong>Serie:</strong> ${ex.extra}</div>
+  <div class="exercise-errors"><strong>Errori comuni:</strong> ${ex.errors}</div>`;
+  c.appendChild(w);
+ });
+}
+renderTargetExercises();
+
+const weeklyTests=[
+{id:'aderenza',title:'Aderenza al Torace',desc:'In piedi, rilassato. La scapola rimane aderente o scivola in avanti?'},
+{id:'inclinazione',title:'Stabilità in Inclinazione',desc:'Inclina il busto di 10–15°. La scapola rimane stabile o “cade”?'},
+{id:'rotazione',title:'Rotazione Scapolare in Elevazione',desc:'Solleva il braccio fino a 90°. La scapola segue il movimento o si muove a scatti?'}
+];
+
+function getWeekKey(){
+ const now=new Date();
+ const monday=new Date(now.setDate(now.getDate()-((now.getDay()+6)%7)));
+ return monday.toISOString().slice(0,10);
+}
+
+function renderWeeklyTest(){
+ const c=document.getElementById('weeklyScapulaTest');c.innerHTML='';
+ const weekKey=getWeekKey();
+ const saved=JSON.parse(localStorage.getItem('weeklyTest_'+weekKey)||'{}');
+ weeklyTests.forEach(test=>{
+  const w=document.createElement('div');
+  const passBtn=document.createElement('button');
+  passBtn.textContent='PASS';passBtn.style.marginRight='10px';
+  passBtn.onclick=()=>{saved[test.id]='PASS';localStorage.setItem('weeklyTest_'+weekKey,JSON.stringify(saved));renderWeeklyHistory();renderWeeklyTest();};
+  const failBtn=document.createElement('button');
+  failBtn.textContent='FAIL';
+  failBtn.onclick=()=>{saved[test.id]='FAIL';localStorage.setItem('weeklyTest_'+weekKey,JSON.stringify(saved));renderWeeklyHistory();renderWeeklyTest();};
+  w.innerHTML=`<div class="exercise-title">${test.title}</div>
+  <div class="exercise-desc">${test.desc}</div>
+  <div style="margin-top:6px;">Risultato: <strong>${saved[test.id]||'—'}</strong></div>`;
+  w.appendChild(passBtn);w.appendChild(failBtn);c.appendChild(w);
+ });
+}
+
+function renderWeeklyHistory(){
+ const c=document.getElementById('weeklyScapulaHistory');c.innerHTML='';
+ for(let i=0;i<6;i++){
+  const d=new Date();d.setDate(d.getDate()-i*7);
+  const key=new Date(d.setDate(d.getDate()-((d.getDay()+6)%7))).toISOString().slice(0,10);
+  const data=JSON.parse(localStorage.getItem('weeklyTest_'+key)||'{}');
+  if(Object.keys(data).length===0)continue;
+  const passCount=Object.values(data).filter(v=>v==='PASS').length;
+  const stability=Math.round((passCount/3)*100);
+  const row=document.createElement('div');
+  row.innerHTML=`<div class="history-day"><span>Settimana ${key}</span><span>${stability}% stabilità</span></div>`;
+  c.appendChild(row);
+ }
+}
+
+function getDailySelection(){
+ const today=new Date().toISOString().slice(0,10);
+ let saved=localStorage.getItem('selection_'+today);
+ if(saved)return JSON.parse(saved);
+ const chosen=[];
+ chosen.push(targetExercisesData[0]);
+ chosen.push(targetExercisesData[2]);
+ chosen.push(targetExercisesData[5]);
+ chosen.push(targetExercisesData[6]);
+ const remaining=targetExercisesData.filter((_,i)=>![0,2,5,6].includes(i));
+ chosen.push(remaining[Math.floor(Math.random()*remaining.length)]);
+ localStorage.setItem('selection_'+today,JSON.stringify(chosen));
+ return chosen;
+}
+
+const todayKey=new Date().toISOString().slice(0,10);
+document.getElementById('todayDate').textContent=todayKey;
+
+function getDayData(key){
+ const raw=localStorage.getItem('rehab_'+key);
+ if(!raw)return{completed:[]};
+ try{return JSON.parse(raw);}catch{return{completed:[]};}
+}
+function setDayData(key,data){localStorage.setItem('rehab_'+key,JSON.stringify(data));}
+
+function renderToday(){
+ const data=getDayData(todayKey);
+ const list=document.getElementById('exerciseList');list.innerHTML='';
+ const daily=getDailySelection();
+ daily.forEach(ex=>{
+  const wrap=document.createElement('div');
+  const label=document.createElement('label');
+  const cb=document.createElement('input');
+  cb.type='checkbox';cb.checked=data.completed.includes(ex.id);
+  cb.addEventListener('change',()=>{
+   const d=getDayData(todayKey);
+   if(cb.checked){if(!d.completed.includes(ex.id))d.completed.push(ex.id);}
+   else{d.completed=d.completed.filter(x=>x!==ex.id);}
+   setDayData(todayKey,d);updateTodayStatus();renderHistory();
+  });
+  const text=document.createElement('div');
+  text.innerHTML=`<div class="exercise-title">${ex.title}</div>
+  <div class="exercise-desc">${ex.desc}</div>
+  <div class="exercise-extra"><strong>Serie:</strong> ${ex.extra}</div>
+  <div class="exercise-errors"><strong>Errori comuni:</strong> ${ex.errors}</div>`;
+  label.appendChild(cb);label.appendChild(text);wrap.appendChild(label);list.appendChild(wrap);
+ });
+ updateTodayStatus();
+}
+
+function updateTodayStatus(){
+ const data=getDayData(todayKey);
+ const done=data.completed.length;
+ const total=getDailySelection().length;
+ const el=document.getElementById('todayStatus');
+ if(done===0){el.textContent='Nessun esercizio completato.';el.className='status notdone';}
+ else if(done<total){el.textContent=`Completati ${done}/${total}.`;el.className='status';}
+ else{el.textContent='Tutti completati ✔';el.className='status done';}
+}
+
+function renderHistory(){
+ const list=document.getElementById('historyList');list.innerHTML='';let completedDays=0;
+ for(let i=6;i>=0;i--){
+  const d=new Date();d.setDate(d.getDate()-i);
+  const key=d.toISOString().slice(0,10);
+  const data=getDayData(key);
+  const total=getDailySelection().length;
+  const done=data.completed.length;
+  const row=document.createElement('div');
+  row.className='history-day';
+  const label=document.createElement('span');label.textContent=key;
+  const badge=document.createElement('span');
+  badge.className='badge '+(done===total?'badge-ok':'badge-ko');
+  badge.textContent=done===total?'OK':`${done}/${total}`;
+  if(done===total)completedDays++;
+  row.appendChild(label);row.appendChild(badge);list.appendChild(row);
+ }
+ const perc=Math.round((completedDays/7)*100);
+ document.getElementById('weeklyProgress').style.width=perc+'%';
+ document.getElementById('weeklyLabel').textContent=`Aderenza: ${completedDays}/7 giorni (${perc}%)`;
+}
+
+renderTargetExercises();
+renderWeeklyTest();
+renderWeeklyHistory();
+renderToday();
+renderHistory();
+</script>
 </body>
 </html>
